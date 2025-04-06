@@ -12,7 +12,7 @@ def footer(ln):
     pdf.set_text_color(180, 180, 180)
     pdf.cell(w=0, h=10, txt=row['Topic'], align='R')
     
-def draw_line(ox, oy, count=25, height=12, blank=False):
+def draw_lines(ox, oy, count=25, height=12, blank=False):
     y = oy
     length = 200
     if blank:
@@ -22,6 +22,10 @@ def draw_line(ox, oy, count=25, height=12, blank=False):
     for i in range(count):
             pdf.line(ox, y, length, y)
             y += height
+
+def gen_lines():
+    for y in range(20, 298, 10):
+        pdf.line(10, y, 200, y)
         
 
 for index, row in df.iterrows():
@@ -30,9 +34,10 @@ for index, row in df.iterrows():
     
     # design the page
     pdf.set_font(family='Times', style='B', size=24)
-    pdf.set_text_color(200, 100, 0)
+    pdf.set_text_color(23, 23, 23)
     pdf.cell(w=0, h=12, txt=row['Topic'], align='L', ln=1)
-    draw_line(10, 25, 26, 12)
+    # draw_lines(10, 25, 26, 12)
+    gen_lines()
     
     
     # footer
@@ -42,7 +47,8 @@ for index, row in df.iterrows():
     for i in range(row['Pages'] - 1):
         pdf.add_page()
         footer(277)
-        draw_line(10, 12, 26, 12, blank=True)
+        # draw_lines(10, 12, 26, 12, blank=True)
+        gen_lines()
 
 # create a file
 pdf.output('output.pdf')
